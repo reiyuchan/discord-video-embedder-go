@@ -9,13 +9,12 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"time"
 )
 
 const (
-	baseURL   = "https://discord.nfp.is/"
+	baseURL   = "https://embeds.video/"
 	catboxURL = "https://catbox.moe/user/api.php"
 )
 
@@ -85,28 +84,8 @@ func (de *DiscordEmbedder) GetURL(videoURL string) (string, error) {
 	if !filter[ext] || ext == "" {
 		return "", fmt.Errorf("file extension not supported")
 	}
-	var buf bytes.Buffer
-	writer := multipart.NewWriter(&buf)
-	_ = writer.WriteField("video", paURL.String())
-	writer.Close()
-	req, err := http.NewRequest(http.MethodPost, baseURL, &buf)
-	if err != nil {
-		return "", err
-	}
-	req.Header.Set("Content-Type", writer.FormDataContentType())
-	res, err := de.client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-	data, err := io.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-	regex := regexp.MustCompile("<pre>(.*)</pre>")
-	match := regex.FindStringSubmatch(string(data))
-	if len(match) <= 1 {
-		return "", fmt.Errorf("no match found due to request failure")
-	}
-	return match[1], nil
+
+	res := fmt.Sprintf("%s%s", baseURL, paURL.String())
+
+	return res, nil
 }

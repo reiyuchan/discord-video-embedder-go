@@ -3,15 +3,18 @@
 A wrapper that helps with discord video embeds that doesn't work.
 
 the wrapper uses:
-- [discord.nfp.is](https://discord.nfp.is/) for embed link generation
+
+- [embeds.video](https://embeds.video/) for embed link generation
 - [catbox.moe](https://catbox.moe/) for file upload
 
 ### Get Module
+
 ```sh
-go get -u https://github.com/reiyuchan/discord-video-embedder-go 
+go get -u https://github.com/reiyuchan/discord-video-embedder-go
 ```
 
 ### Example:
+
 ```go
 package main
 
